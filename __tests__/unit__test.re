@@ -8,157 +8,75 @@ let enc: prime_encoding = `hex;
 let do_logging = false;
 
 let try_me = (name, inst) => {
-  test("generateKeys", () => {
-    let r = inst -> generateKeys(enc);
-    if (do_logging) {
-      {j|generateKeys: $(r)|j}->Js.Console.log;
-    };
-    r |> expect |> not_ |> toEqual("");
-  });
+  describe(
+    name,
+    () => {
+      test("generateKeys", () => {
+        let r = inst->generateKeys(enc);
+        if (do_logging) {
+          {j|generateKeys: $(r)|j}->Js.Console.log;
+        };
+        r |> expect |> not_ |> toEqual("");
+      });
 
-  test("getGenerator", () => {
-    let g = inst -> getGenerator(enc);
-    if (do_logging) {
-      {j|getGenerator: $(g)|j}->Js.Console.log;
-    };
-    g |> expect |> not_ |> toEqual("");
-  });
+      test("getGenerator", () => {
+        let g = inst->getGenerator(enc);
+        if (do_logging) {
+          {j|getGenerator: $(g)|j}->Js.Console.log;
+        };
+        g |> expect |> not_ |> toEqual("");
+      });
 
-  test("getPrime", () => {
-    let p = inst -> getPrime(enc)
-    if (do_logging) {
-      {j|getPrime: $(p)|j}->Js.Console.log;
-    };
-    p |> expect |> not_ |> toEqual("");
-  });
+      test("getPrime", () => {
+        let p = inst->getPrime(enc);
+        if (do_logging) {
+          {j|getPrime: $(p)|j}->Js.Console.log;
+        };
+        p |> expect |> not_ |> toEqual("");
+      });
 
-  test("getPrivateKey", () => {
-    let r = inst->getPrivateKey(enc);
+      test("getPrivateKey", () => {
+        let r = inst->getPrivateKey(enc);
 
-    if (do_logging) {
-      {j|getPrivateKey: $(r)|j}->Js.Console.log;
-    };
-    r |> expect |> not_ |> toEqual("");
-  });
+        if (do_logging) {
+          {j|getPrivateKey: $(r)|j}->Js.Console.log;
+        };
+        r |> expect |> not_ |> toEqual("");
+      });
 
-  test("getPublicKey", () => {
-    let p = inst -> getPublicKey(enc);
-    if (do_logging) {
-      {j|Public A: $(p)|j}->Js.Console.log;
-    };
-    p |> expect |> not_ |> toEqual("");
-  });
-}
+      test("getPublicKey", () => {
+        let p = inst->getPublicKey(enc);
+        if (do_logging) {
+          {j|Public A: $(p)|j}->Js.Console.log;
+        };
+        p |> expect |> not_ |> toEqual("");
+      });
+    },
+  );
+};
 
-// -------- createDiffieHellman1 -------- //
 let a = createDiffieHellman1(~prime_length=512);
-let inst = a;
-let p = a->getPrime(enc);
-let g = a->getGenerator(enc);
-let ka = inst->generateKeys(enc);
-let public_a = inst->getPublicKey(enc);
-
-describe("DiffieHellman1", () => {
-  test("generateKeys", () => {
-    if (do_logging) {
-      {j|generateKeys: $(ka)|j}->Js.Console.log;
-    };
-    ka |> expect |> not_ |> toEqual("");
-  });
-
-  test("getGenerator", () => {
-    if (do_logging) {
-      {j|getGenerator: $(g)|j}->Js.Console.log;
-    };
-    g |> expect |> not_ |> toEqual("");
-  });
-
-  test("getPrime", () => {
-    if (do_logging) {
-      {j|getPrime: $(p)|j}->Js.Console.log;
-    };
-    p |> expect |> not_ |> toEqual("");
-  });
-
-  test("getPrivateKey", () => {
-    let r = inst->getPrivateKey(enc);
-
-    if (do_logging) {
-      {j|getPrivateKey: $(r)|j}->Js.Console.log;
-    };
-    r |> expect |> not_ |> toEqual("");
-  });
-
-  test("getPublicKey", () => {
-    if (do_logging) {
-      {j|Public A: $(public_a)|j}->Js.Console.log;
-    };
-    public_a |> expect |> not_ |> toEqual("");
-  });
-});
-//
-//
-//
-// -------- createDiffieHellman4 -------- //
-
 let b =
   createDiffieHellman4(
-    ~prime=p,
+    ~prime=a->getPrime(enc),
     ~prime_encoding=enc,
-    ~generator=g,
+    ~generator=a->getGenerator(enc),
     ~generator_encoding=enc,
   );
-let inst = b;
-let kb = inst->generateKeys(enc);
-let public_b = inst->getPublicKey(enc);
-describe("DiffieHellman4", () => {
-  test("generateKeys", () => {
-    if (do_logging) {
-      {j|generateKeys: $(kb)|j}->Js.Console.log;
-    };
-    kb |> expect |> not_ |> toEqual("");
-  });
-  test("getGenerator", () => {
-    let r = inst->getGenerator(enc);
 
-    if (do_logging) {
-      {j|getGenerator: $(r)|j}->Js.Console.log;
-    };
-    r |> expect |> not_ |> toEqual("");
-  });
+let instances = [|
+  ("createDiffieHellman1", a),
+  ("createDiffieHellman4", b),
+|];
 
-  test("getPrime", () => {
-    let r = inst->getPrime(enc);
-
-    if (do_logging) {
-      {j|getPrime: $(r)|j}->Js.Console.log;
-    };
-    r |> expect |> not_ |> toEqual("");
-  });
-
-  test("getPrivateKey", () => {
-    let r = inst->getPrivateKey(enc);
-
-    if (do_logging) {
-      {j|getPrivateKey: $(r)|j}->Js.Console.log;
-    };
-    r |> expect |> not_ |> toEqual("");
-  });
-
-  test("getPublicKey", () => {
-    if (do_logging) {
-      {j|getPublicKey: $(public_b)|j}->Js.Console.log;
-    };
-    public_b |> expect |> not_ |> toEqual("");
-  });
-});
+instances->Belt.Array.forEach(((n, i)) => try_me(n, i));
 
 let sa = ref("");
 let sb = ref("");
 
 describe("computeSecret", () => {
   test("A", () => {
-    let r = a->computeSecret(public_b, enc, enc);
+    let r = a->computeSecret(b->getPublicKey(enc), enc, enc);
     sa := r;
     if (do_logging) {
       {j|Secret A: $(r)|j}->Js.Console.log;
@@ -167,7 +85,7 @@ describe("computeSecret", () => {
   });
 
   test("B", () => {
-    let r = b->computeSecret(public_a, enc, enc);
+    let r = b->computeSecret(a->getPublicKey(enc), enc, enc);
     sb := r;
     if (do_logging) {
       {j|Secret B: $(r)|j}->Js.Console.log;

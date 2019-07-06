@@ -2,85 +2,51 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.js");
+var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
 var DiffieHellman = require("../src/DiffieHellman.bs.js");
 
 function try_me(name, inst) {
-  Jest.test("generateKeys", (function (param) {
-          var r = DiffieHellman.generateKeys(inst, /* hex */5194459);
-          return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](r)));
-        }));
-  Jest.test("getGenerator", (function (param) {
-          var g = DiffieHellman.getGenerator(inst, /* hex */5194459);
-          return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](g)));
-        }));
-  Jest.test("getPrime", (function (param) {
-          var p = DiffieHellman.getPrime(inst, /* hex */5194459);
-          return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](p)));
-        }));
-  Jest.test("getPrivateKey", (function (param) {
-          var r = DiffieHellman.getPrivateKey(inst, /* hex */5194459);
-          return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](r)));
-        }));
-  return Jest.test("getPublicKey", (function (param) {
-                var p = DiffieHellman.getPublicKey(inst, /* hex */5194459);
-                return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](p)));
+  return Jest.describe(name, (function (param) {
+                Jest.test("generateKeys", (function (param) {
+                        var r = DiffieHellman.generateKeys(inst, /* hex */5194459);
+                        return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](r)));
+                      }));
+                Jest.test("getGenerator", (function (param) {
+                        var g = DiffieHellman.getGenerator(inst, /* hex */5194459);
+                        return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](g)));
+                      }));
+                Jest.test("getPrime", (function (param) {
+                        var p = DiffieHellman.getPrime(inst, /* hex */5194459);
+                        return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](p)));
+                      }));
+                Jest.test("getPrivateKey", (function (param) {
+                        var r = DiffieHellman.getPrivateKey(inst, /* hex */5194459);
+                        return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](r)));
+                      }));
+                return Jest.test("getPublicKey", (function (param) {
+                              var p = DiffieHellman.getPublicKey(inst, /* hex */5194459);
+                              return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](p)));
+                            }));
               }));
 }
 
 var a = DiffieHellman.createDiffieHellman1(512);
 
-var p = DiffieHellman.getPrime(a, /* hex */5194459);
+var b = DiffieHellman.createDiffieHellman4(DiffieHellman.getPrime(a, /* hex */5194459), /* hex */5194459, DiffieHellman.getGenerator(a, /* hex */5194459), /* hex */5194459);
 
-var g = DiffieHellman.getGenerator(a, /* hex */5194459);
+var instances = /* array */[
+  /* tuple */[
+    "createDiffieHellman1",
+    a
+  ],
+  /* tuple */[
+    "createDiffieHellman4",
+    b
+  ]
+];
 
-var ka = DiffieHellman.generateKeys(a, /* hex */5194459);
-
-var public_a = DiffieHellman.getPublicKey(a, /* hex */5194459);
-
-Jest.describe("DiffieHellman1", (function (param) {
-        Jest.test("generateKeys", (function (param) {
-                return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](ka)));
-              }));
-        Jest.test("getGenerator", (function (param) {
-                return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](g)));
-              }));
-        Jest.test("getPrime", (function (param) {
-                return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](p)));
-              }));
-        Jest.test("getPrivateKey", (function (param) {
-                var r = DiffieHellman.getPrivateKey(a, /* hex */5194459);
-                return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](r)));
-              }));
-        return Jest.test("getPublicKey", (function (param) {
-                      return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](public_a)));
-                    }));
-      }));
-
-var b = DiffieHellman.createDiffieHellman4(p, /* hex */5194459, g, /* hex */5194459);
-
-var kb = DiffieHellman.generateKeys(b, /* hex */5194459);
-
-var public_b = DiffieHellman.getPublicKey(b, /* hex */5194459);
-
-Jest.describe("DiffieHellman4", (function (param) {
-        Jest.test("generateKeys", (function (param) {
-                return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](kb)));
-              }));
-        Jest.test("getGenerator", (function (param) {
-                var r = DiffieHellman.getGenerator(b, /* hex */5194459);
-                return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](r)));
-              }));
-        Jest.test("getPrime", (function (param) {
-                var r = DiffieHellman.getPrime(b, /* hex */5194459);
-                return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](r)));
-              }));
-        Jest.test("getPrivateKey", (function (param) {
-                var r = DiffieHellman.getPrivateKey(b, /* hex */5194459);
-                return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](r)));
-              }));
-        return Jest.test("getPublicKey", (function (param) {
-                      return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](public_b)));
-                    }));
+Belt_Array.forEach(instances, (function (param) {
+        return try_me(param[0], param[1]);
       }));
 
 var sa = /* record */[/* contents */""];
@@ -89,12 +55,12 @@ var sb = /* record */[/* contents */""];
 
 Jest.describe("computeSecret", (function (param) {
         Jest.test("A", (function (param) {
-                var r = DiffieHellman.computeSecret(a, public_b, /* hex */5194459, /* hex */5194459);
+                var r = DiffieHellman.computeSecret(a, DiffieHellman.getPublicKey(b, /* hex */5194459), /* hex */5194459, /* hex */5194459);
                 sa[0] = r;
                 return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](r)));
               }));
         Jest.test("B", (function (param) {
-                var r = DiffieHellman.computeSecret(b, public_a, /* hex */5194459, /* hex */5194459);
+                var r = DiffieHellman.computeSecret(b, DiffieHellman.getPublicKey(a, /* hex */5194459), /* hex */5194459, /* hex */5194459);
                 sb[0] = r;
                 return Jest.Expect[/* toEqual */12]("", Jest.Expect[/* not__ */24](Jest.Expect[/* expect */0](r)));
               }));
@@ -107,20 +73,12 @@ var enc = /* hex */5194459;
 
 var do_logging = false;
 
-var inst = b;
-
 exports.enc = enc;
 exports.do_logging = do_logging;
 exports.try_me = try_me;
 exports.a = a;
-exports.p = p;
-exports.g = g;
-exports.ka = ka;
-exports.public_a = public_a;
 exports.b = b;
-exports.inst = inst;
-exports.kb = kb;
-exports.public_b = public_b;
+exports.instances = instances;
 exports.sa = sa;
 exports.sb = sb;
 /* a Not a pure module */
