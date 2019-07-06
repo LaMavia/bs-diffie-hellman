@@ -1,0 +1,23 @@
+{
+  "name": "bs-diffie-hellman",
+  "version": "0.1.0",
+  "scripts": {
+    "clean": "bsb -clean-world",
+    "build": "bsb -make-world",
+    "watch": "bsb -make-world -w",
+    "bsb": "bsb -clean-world -make-world",
+    "test": "npm run build && jest",
+    "ts": "ts-node ./src/temp.ts"
+  },
+  "keywords": [
+    "BuckleScript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@glennsl/bs-jest": "^0.4.8",
+    "@types/diffie-hellman": "^5.0.0",
+    "bs-platform": "^5.0.4",
+    "diffie-hellman": "^5.0.3"
+  }
+}
