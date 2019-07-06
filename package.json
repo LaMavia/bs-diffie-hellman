@@ -1,6 +1,6 @@
 {
   "name": "bs-diffie-hellman",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
@@ -9,6 +9,7 @@
     "test": "npm run build && jest",
     "ts": "ts-node ./src/temp.ts"
   },
+  "description": "Bindings of https://www.npmjs.com/package/diffie-hellman for ReasonML",
   "keywords": [
     "BuckleScript",
     "ReasonML",
@@ -17,6 +18,10 @@
     "hellman",
     "crypto"
   ],
+  "bugs": {
+    "url": "https://github.com/DerivedMate/bs-diffie-hellman/issues",
+    "email": "kemikspl@gmail.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/DerivedMate/bs-diffie-hellman"

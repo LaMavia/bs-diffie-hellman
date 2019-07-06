@@ -2,6 +2,19 @@
 
 Binding of [diffie-hellman](https://github.com/crypto-browserify/diffie-hellman) for ReasonML.
 
+## installation
+Install the npm package
+```shell
+$ npm i bs-diffie-hellman
+```
+Add it to the dependencies in your `bsconfig.json`
+```json 
+"bs-dependencies": ["bs-diffie-hellman"]
+```
+Don't forget to build your app
+```shell
+$ bsb -make-world
+```
 ## Design decisions
 1. string enums -> polymorphic variants
 1. labeled arguments in constructors
