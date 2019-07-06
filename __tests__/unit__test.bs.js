@@ -69,6 +69,40 @@ Jest.describe("computeSecret", (function (param) {
                     }));
       }));
 
+DiffieHellman.generateKeys(a, /* hex */5194459);
+
+DiffieHellman.generateKeys(b, /* hex */5194459);
+
+var prka = DiffieHellman.getPrivateKey(a, /* hex */5194459);
+
+var prkb = DiffieHellman.getPrivateKey(b, /* hex */5194459);
+
+var pbka = DiffieHellman.getPublicKey(a, /* hex */5194459);
+
+var pbkb = DiffieHellman.getPublicKey(b, /* hex */5194459);
+
+Jest.describe("SettersA", (function (param) {
+        Jest.test("setPrivateKey", (function (param) {
+                DiffieHellman.setPrivateKey(a, prkb, /* hex */5194459);
+                return Jest.Expect[/* toEqual */12](prkb, Jest.Expect[/* expect */0](DiffieHellman.getPrivateKey(a, /* hex */5194459)));
+              }));
+        return Jest.test("setPublicKey", (function (param) {
+                      DiffieHellman.setPublicKey(a, pbkb, /* hex */5194459);
+                      return Jest.Expect[/* toEqual */12](pbkb, Jest.Expect[/* expect */0](DiffieHellman.getPublicKey(a, /* hex */5194459)));
+                    }));
+      }));
+
+Jest.describe("SettersB", (function (param) {
+        Jest.test("setPrivateKey", (function (param) {
+                DiffieHellman.setPrivateKey(b, pbka, /* hex */5194459);
+                return Jest.Expect[/* toEqual */12](pbka, Jest.Expect[/* expect */0](DiffieHellman.getPrivateKey(b, /* hex */5194459)));
+              }));
+        return Jest.test("setPublicKey", (function (param) {
+                      DiffieHellman.setPublicKey(b, pbka, /* hex */5194459);
+                      return Jest.Expect[/* toEqual */12](pbka, Jest.Expect[/* expect */0](DiffieHellman.getPublicKey(b, /* hex */5194459)));
+                    }));
+      }));
+
 var enc = /* hex */5194459;
 
 var do_logging = false;
@@ -81,4 +115,8 @@ exports.b = b;
 exports.instances = instances;
 exports.sa = sa;
 exports.sb = sb;
+exports.prka = prka;
+exports.prkb = prkb;
+exports.pbka = pbka;
+exports.pbkb = pbkb;
 /* a Not a pure module */

@@ -3,7 +3,7 @@
 
 var DiffieHellman = require("diffie-hellman");
 
-function prime_encodingToJs(enc) {
+function prime_encoding_to_js(enc) {
   if (enc !== -714733139) {
     if (enc >= 5194459) {
       return "hex";
@@ -15,45 +15,50 @@ function prime_encodingToJs(enc) {
   }
 }
 
-function prime_encodingToJs_rev(enc) {
-  return "hex";
-}
-
 function createDiffieHellman1(prime_length) {
   return DiffieHellman.createDiffieHellman(prime_length);
 }
 
 function createDiffieHellman4(prime, prime_encoding, generator, generator_encoding) {
-  return DiffieHellman.createDiffieHellman(prime, prime_encodingToJs(prime_encoding), generator, prime_encodingToJs(generator_encoding));
+  return DiffieHellman.createDiffieHellman(prime, prime_encoding_to_js(prime_encoding), generator, prime_encoding_to_js(generator_encoding));
 }
 
 function getGenerator(instance, prime_encoding) {
-  return instance.getGenerator(prime_encodingToJs(prime_encoding));
+  return instance.getGenerator(prime_encoding_to_js(prime_encoding));
 }
 
 function getPrime(inst, prime_encoding) {
-  return inst.getPrime(prime_encodingToJs(prime_encoding));
+  return inst.getPrime(prime_encoding_to_js(prime_encoding));
 }
 
 function generateKeys(inst, prime_encoding) {
-  var enc = prime_encodingToJs(prime_encoding);
+  var enc = prime_encoding_to_js(prime_encoding);
   return inst.generateKeys(enc);
 }
 
 function getPrivateKey(inst, prime_encoding) {
-  return inst.getPrivateKey(prime_encodingToJs(prime_encoding));
+  return inst.getPrivateKey(prime_encoding_to_js(prime_encoding));
 }
 
 function getPublicKey(inst, prime_encoding) {
-  return inst.getPublicKey(prime_encodingToJs(prime_encoding));
+  return inst.getPublicKey(prime_encoding_to_js(prime_encoding));
+}
+
+function setPrivateKey(inst, key, key_encoding) {
+  inst.setPrivateKey(key, prime_encoding_to_js(key_encoding));
+  return /* () */0;
+}
+
+function setPublicKey(inst, key, key_encoding) {
+  inst.setPublicKey(key, prime_encoding_to_js(key_encoding));
+  return /* () */0;
 }
 
 function computeSecret(inst, other_public, input_encoding, output_encoding) {
-  return inst.computeSecret(other_public, prime_encodingToJs(input_encoding), prime_encodingToJs(output_encoding));
+  return inst.computeSecret(other_public, prime_encoding_to_js(input_encoding), prime_encoding_to_js(output_encoding));
 }
 
-exports.prime_encodingToJs = prime_encodingToJs;
-exports.prime_encodingToJs_rev = prime_encodingToJs_rev;
+exports.prime_encoding_to_js = prime_encoding_to_js;
 exports.createDiffieHellman1 = createDiffieHellman1;
 exports.createDiffieHellman4 = createDiffieHellman4;
 exports.getGenerator = getGenerator;
@@ -61,5 +66,7 @@ exports.getPrime = getPrime;
 exports.generateKeys = generateKeys;
 exports.getPrivateKey = getPrivateKey;
 exports.getPublicKey = getPublicKey;
+exports.setPrivateKey = setPrivateKey;
+exports.setPublicKey = setPublicKey;
 exports.computeSecret = computeSecret;
 /* diffie-hellman Not a pure module */

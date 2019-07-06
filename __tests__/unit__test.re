@@ -97,3 +97,35 @@ describe("computeSecret", () => {
     sa |> expect |> toEqual(sb)
   );
 });
+
+a->generateKeys(enc);
+b->generateKeys(enc);
+let prka = a->getPrivateKey(enc);
+let prkb = b->getPrivateKey(enc);
+
+let pbka = a->getPublicKey(enc);
+let pbkb = b->getPublicKey(enc);
+
+describe("SettersA", () => {
+  test("setPrivateKey", () => {
+    a->setPrivateKey(prkb, enc);
+    a->getPrivateKey(enc) |> expect |> toEqual(prkb);
+  });
+
+  test("setPublicKey", () => {
+    a->setPublicKey(pbkb, enc);
+    a->getPublicKey(enc) |> expect |> toEqual(pbkb);
+  });
+});
+
+describe("SettersB", () => {
+  test("setPrivateKey", () => {
+    b->setPrivateKey(pbka, enc);
+    b->getPrivateKey(enc) |> expect |> toEqual(pbka);
+  });
+
+  test("setPublicKey", () => {
+    b->setPublicKey(pbka, enc);
+    b->getPublicKey(enc) |> expect |> toEqual(pbka);
+  });
+});

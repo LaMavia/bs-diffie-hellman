@@ -14,4 +14,4 @@ let bobKey = bob->generateKeys(`hex);
 let aliceSecret = alice->computeSecret(bobKey, `hex, `hex);
 let bobSecret = bob->computeSecret(aliceKey, `hex, `hex);
 
-Js.Console.log(aliceSecret === bobSecret);
+Js.Console.log(assert(aliceSecret === bobSecret));
