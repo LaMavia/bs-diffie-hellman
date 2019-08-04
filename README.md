@@ -1,4 +1,4 @@
-# bs-diffiehellman
+# bs-diffie-hellman
 
 Binding of [diffie-hellman](https://github.com/crypto-browserify/diffie-hellman) for ReasonML.
 
